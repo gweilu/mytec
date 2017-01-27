@@ -1,0 +1,24 @@
+    windows 系统上新建一个共享文件夹test,系统用户:Administrator,密码:pass,ip：xxx.xxx.xxx.xxx(或者用主机名ROBERT-PC)
+    在Linux系统下安装cifs-utils :sudo apt-get install cifs-utils
+    检查并开启端口：sudo service portmap start
+    linux 系统上新建一个目录/home/share
+
+    vi /etc/fstab在后面添加//ROBERT-PC/test  /home/share cifs defaults,username=Administrator,password=pass,users 如下：
+    #
+    # /etc/fstab
+    # Created by anaconda on Thu Oct 30 05:52:12 2014
+    #
+    # Accessible filesystems, by reference, are maintained under '/dev/disk'
+    # See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+    #
+    /dev/mapper/vg_centos1-lv_root /                       ext4    defaults        1 1
+    UUID=ec9dac99-4d4d-4a20-b27a-d99ecbca50ea /boot                   ext4    defaults        1 2
+    /dev/mapper/vg_centos1-lv_swap swap                    swap    defaults        0 0
+    tmpfs                   /dev/shm                tmpfs   defaults        0 0
+    devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
+    sysfs                   /sys                    sysfs   defaults        0 0
+    //ROBERT-PC/test      /home/share cifs defaults,username=Administrator,password=pass 0 0
+
+注意：参数后面加了users，主要目的是能够是普通用户登录的时候能够自动挂载
+
+    用mount -a 检查是否成功，如没有任何显示说明没问题。
